@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Get, Post, Query, Req, Res } from '@nestjs/common';
-import { Param } from '@nestjs/common/decorators';
+import { Param, Put } from '@nestjs/common/decorators';
 import { Request, Response } from 'express';
 import { Question } from './question.entity';
 import { QuestionService } from './question.service';
@@ -14,6 +14,12 @@ export class QuestionController {
         return this.questionService.createQuestion(question, req, res);
         
     }
+
+    @Put('/:id')
+    update(@Param() param, @Body() question: Question, @Req() req: Request, @Res() res: Response){
+        return this.questionService.updateQuestion(parseInt(param.id), question, req, res);
+    }
+
     @Get('/all')
     getAllQuestion(){
         return this.questionService.findAllNum();
@@ -21,7 +27,7 @@ export class QuestionController {
 
     @Get('')
     getQuestions(@Query() queryList, @Req() req: Request, @Res() res: Response ){
-        return this.questionService.findperPage(queryList.page_num, queryList.max_items_per_page, res, queryList.sortBy);
+        return this.questionService.findperPage(queryList.page_num, queryList.max_items_per_page, res, queryList.sortBy, queryList.filter);
     }
 
     @Get('/:id')
