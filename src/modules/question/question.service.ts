@@ -71,6 +71,11 @@ export class QuestionService {
     res.status(201).send(question);
   }
 
+  async updateQuestion(id: number, question: Question, req: Request, res: Response) {
+    this.QuestionRepository.update(id, question);
+    res.status(201).send(question);
+  }
+
   async getAllComments(id: number, req: Request, res: Response) {
     const find = await this.QuestionRepository.find({
         where:{
