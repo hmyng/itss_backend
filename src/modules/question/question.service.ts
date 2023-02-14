@@ -16,8 +16,17 @@ export class QuestionService {
   // findAll(): Observable<Question[]>{
   //     return from(this.QuestionRepository.find());
   // }
-  async findAllNum() {
-    const All = await this.QuestionRepository.find();
+  async findAllNum(title: string) {
+    const All = await this.QuestionRepository.find({
+      relations: {
+        author: true,
+        comments: true,
+        likes: true
+      },
+      where: {
+        title: title
+      }
+    });
     if (All !== null) return All.length;
   }
 
@@ -66,6 +75,10 @@ export class QuestionService {
   async createQuestion(question: Question, req: Request, res: Response) {
     this.QuestionRepository.insert(question);
     res.status(201).send(question);
+  }
+
+  async updateQuestion(question: Question, req: Request, res: Response){
+    // this.QuestionRepository.update(question.id, req);
   }
 
   async getAllComments(id: number, req: Request, res: Response) {
