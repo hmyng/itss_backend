@@ -3,7 +3,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Request, Response } from 'express';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { Question } from './question.entity';
 
 @Injectable()
@@ -30,9 +30,12 @@ export class QuestionService {
     if (All !== null) return All.length;
   }
 
-  async findperPage(page_num: number, num_per_page: number, res: Response, sort) {
+  async findperPage(page_num: number, num_per_page: number, res: Response, sort, filter) {
     const sortBy = JSON.parse(sort);
     const pagination = await this.QuestionRepository.find({
+      where: {
+          title: ILike('%'+ filter.title + '%'),
+      },
       order:{
         createdAt: sortBy.createdAt,
         // cần fix
@@ -77,8 +80,9 @@ export class QuestionService {
     res.status(201).send(question);
   }
 
-  async updateQuestion(question: Question, req: Request, res: Response){
-    // this.QuestionRepository.update(question.id, req);
+  async updateQuestion(id: number, question: Question, req: Request, res: Response) {
+    this.QuestionRepository.update(id, question);
+    res.status(201).send(question);
   }
 
   async getAllComments(id: number, req: Request, res: Response) {

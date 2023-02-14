@@ -15,6 +15,12 @@ export class QuestionController {
         return this.questionService.createQuestion(question, req, res);
         
     }
+
+    @Put('/:id')
+    update(@Param() param, @Body() question: Question, @Req() req: Request, @Res() res: Response){
+        return this.questionService.updateQuestion(parseInt(param.id), question, req, res);
+    }
+
     @Get('/all')
     getAllQuestion(@Param('title') title: string){
         return this.questionService.findAllNum(title);
@@ -22,7 +28,7 @@ export class QuestionController {
 
     @Get('')
     getQuestions(@Query() queryList, @Req() req: Request, @Res() res: Response ){
-        return this.questionService.findperPage(queryList.page_num, queryList.max_items_per_page, res, queryList.sortBy);
+        return this.questionService.findperPage(queryList.page_num, queryList.max_items_per_page, res, queryList.sortBy, queryList.filter);
     }
 
     @Get('/:id')
@@ -30,8 +36,4 @@ export class QuestionController {
         return this.questionService.getAllComments(parseInt(param.id), req, res);
     }
 
-    @Put('/id')
-    update(@Body() question: Question, @Req() req: Request, @Res() res: Response){
-        return this.questionService.updateQuestion(question, req, res);
-    }
 }
