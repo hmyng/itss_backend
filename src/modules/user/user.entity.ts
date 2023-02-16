@@ -24,6 +24,9 @@ export class User extends BaseEntity{
    @Column({type: 'text', nullable:false, default: "user"})
    role:string;
 
+   @Column({type: 'int', nullable: true, default: 1})
+   status:number
+
    @OneToMany(() => Document, (document) => document.author)
    document: Document[];
 

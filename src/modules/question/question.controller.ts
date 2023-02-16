@@ -3,7 +3,6 @@
 import { Body, Controller, Get, Post, Query, Req, Res } from '@nestjs/common';
 import { Param, Put } from '@nestjs/common/decorators';
 import { Request, Response } from 'express';
-import { title } from 'process';
 import { Question } from './question.entity';
 import { QuestionService } from './question.service';
 
@@ -19,6 +18,11 @@ export class QuestionController {
     @Put('/:id')
     update(@Param() param, @Body() question: Question, @Req() req: Request, @Res() res: Response){
         return this.questionService.updateQuestion(parseInt(param.id), question, req, res);
+    }
+
+    @Put('/:id/verify')
+    verify(@Param() param, @Query() queryList, @Res() res: Response){
+        return this.questionService.verifyQuestion(parseInt(param.id), queryList.author_id, queryList.user_id, res);
     }
 
     @Get('/all')

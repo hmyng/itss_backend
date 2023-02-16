@@ -11,6 +11,9 @@ export class Comment extends BaseEntity{
    @Column({type: 'text', nullable:true})
    content:string
 
+   @Column({type: 'int', nullable:true, default: 0})
+   status:number
+
    @ManyToOne(() => User, (user) => user.comments, { cascade: true })
    user: User
 

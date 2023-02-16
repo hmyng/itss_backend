@@ -40,4 +40,10 @@ export class UserService {
 
         // };
     // }
+
+    async banUser(id: number){
+        const user = this.UserRepository.update(id, {
+            status: 0,
+        })
+    }
 }

@@ -15,4 +15,11 @@ export class CommentService {
     this.CommentRepository.insert(comment);
     res.status(201).send(comment);
   }
+
+  async verifyCommnent(id: number, res: Response) {
+    const cmt = this.CommentRepository.update(id, {
+      status: 1,
+    });
+    res.status(201).send(cmt);
+  }
 }

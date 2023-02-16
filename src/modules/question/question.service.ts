@@ -31,13 +31,13 @@ export class QuestionService {
   }
 
   async findperPage(page_num: number, num_per_page: number, res: Response, sort, filter) {
-    const sortBy = JSON.parse(sort);
+    // const sortBy = JSON.parse(sort);
     const pagination = await this.QuestionRepository.find({
       where: {
-          title: ILike('%'+ filter.title + '%'),
+          // title: ILike('%'+ filter.title + '%'),
       },
       order:{
-        createdAt: sortBy.createdAt,
+        // createdAt: sortBy.createdAt,
         // cần fix
         // likes: sortBy.likes, 
       },
@@ -85,6 +85,22 @@ export class QuestionService {
     res.status(201).send(question);
   }
 
+  async verifyQuestion(id: number, author_id: number, user_id: number, res: Response) {
+    if(author_id === user_id) {
+      const question = this.QuestionRepository.update(id, {
+        rating: 1
+      });
+      res.status(201).send(question);
+    }else {
+      res.status(403).send('not authorized')
+    }
+    }
+
+  async reportQuestion(id: number, res: Response) {
+    const question = this.QuestionRepository.update(id, {
+      RatingNum: 3
+    })
+  }
   async getAllComments(id: number, req: Request, res: Response) {
     const find = await this.QuestionRepository.find({
         where:{

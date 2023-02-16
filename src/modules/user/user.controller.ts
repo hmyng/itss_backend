@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { User } from './user.entity';
 import { UserService } from './user.service';
@@ -23,5 +23,12 @@ export class UserController {
         return this.userService.createUser(user, request, response);
         
     }
+
+    @Put(':id')
+    ban(@Param() param){
+        return this.userService.banUser(param.id);
+    }
+
+
 }
 
