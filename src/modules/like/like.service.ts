@@ -28,6 +28,7 @@ export class LikeService {
         review: true,
         document: true,
         question: true,
+        comment: true,
       },
     });
     if (check === null) {
@@ -65,6 +66,7 @@ export class LikeService {
         review: true,
         document: true,
         question: true,
+        comment: true,
       },
     });
     if (check !== null) {

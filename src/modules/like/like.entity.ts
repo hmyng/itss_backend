@@ -5,6 +5,7 @@ import { Document } from "../document/document.entity";
 import { Question } from "../question/question.entity";
 import { Review } from "../review/review.entity";
 import { User } from "../user/user.entity";
+import { Comment } from "../comment/comment.entity";
 
 @Entity('like')
 export class Like extends BaseEntity{
@@ -20,5 +21,9 @@ export class Like extends BaseEntity{
 
    @ManyToOne(() => Document, (document) => document.likes, { cascade: true })
    document: Document
+
+   @ManyToOne(() => Comment, (comment) => comment.likes, { cascade: true })
+   comment: Comment
+   
 }
 

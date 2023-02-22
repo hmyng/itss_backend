@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { BaseEntity } from "src/common/abstract.type";
-import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 import { Document } from "../document/document.entity";
+import { Like } from "../like/like.entity";
 import { Question } from "../question/question.entity";
 import { Review } from "../review/review.entity";
 import { User } from "../user/user.entity";
@@ -25,5 +26,8 @@ export class Comment extends BaseEntity{
 
    @ManyToOne(() => Document, (document) => document.comments)
    document: Document
+
+   @OneToMany(() => Like, (like) => like.comment)
+   likes: Like[];
 }
 
